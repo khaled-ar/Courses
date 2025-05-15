@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title')->unique();
             $table->text('description');
-            $table->timestamp('start_date');
-            $table->timestamp('end_date');
+            $table->timestamp('start_date')->nullable();
+            $table->timestamp('end_date')->nullable();
             $table->float('cost');
             $table->timestamps();
         });
