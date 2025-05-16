@@ -2,47 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\Coursers\EnrollInCourse;
+use App\Models\Course;
 
 class CoursesController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return $this->generalResponse(Course::date()->paginate(10), 'Available Courses');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function enrolled()
     {
-        //
+        $courses = request()->user()->courses()->with('course')->get();
+        return $this->generalResponse($courses, 'Enrolled Courses');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function enroll(EnrollInCourse $request, Course $course)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return $request->enroll($course);
     }
 }
